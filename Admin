@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ATOZ Bangladesh – All-in-One</title>
+<style>
+*{box-sizing:border-box}body{font-family:Arial;margin:0;background:#f5f5f5}
+header{background:#232f3e;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 20px}
+header h1 span{color:#ff9900}
+nav a{color:white;text-decoration:none;margin:0 8px;font-weight:600}
+button{background:#ff9900;border:none;color:white;padding:8px 12px;border-radius:4px;cursor:pointer}
+section{display:none;padding:20px}
+.active{display:block}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.product{background:#fff;padding:10px;border-radius:6px;text-align:center}
+.login-box{max-width:320px;margin:50px auto;background:#fff;padding:25px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,.2)}
+input,select,textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:4px}
+.order-box{background:#fff;padding:10px;margin:10px 0;border-radius:6px}
+footer{text-align:center;background:#232f3e;color:white;padding:10px;margin-top:20px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span>ATOZ</span> Bangladesh</h1>
+  <nav>
+    <a href="#" onclick="show('home')">Home</a>
+    <a href="#" onclick="show('checkout')">Checkout</a>
+    <a href="#" onclick="show('login')">Admin</a>
+  </nav>
+</header>
+
+<!-- 🏠 HOME -->
+<section id="home" class="active">
+  <h2>🛍️ Top Products</h2>
+  <div class="product-grid">
+    <div class="product">
+      <img src="images/item1.jpg" alt="Earbuds" width="100%">
+      <h4>Wireless Earbuds</h4><p>৳1250</p>
+      <button onclick="addToCart('Wireless Earbuds',1250)">Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="images/item2.jpg" alt="Watch" width="100%">
+      <h4>Smart Watch</h4><p>৳1750</p>
+      <button onclick="addToCart('Smart Watch',1750)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- 🛒 CHECKOUT -->
+<section id="checkout">
+  <h2>Checkout</h2>
+  <form id="checkoutForm">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="tel" id="phone" placeholder="Phone Number" required>
+    <select id="district" required>
+      <option value="">Select District</option>
+      <option>Dhaka</option><option>Chittagong</option>
+    </select>
+    <select id="area" required>
+      <option>Inside Dhaka - 70৳</option>
+      <option>Outside Dhaka - 120৳</option>
+    </select>
+    <textarea id="address" placeholder="Full Address" required></textarea>
+    <button type="submit">Confirm Order</button>
+  </form>
+</section>
+
+<!-- 🔐 LOGIN -->
+<section id="login">
+  <div class="login-box">
+    <h2>Admin / Moderator Login</h2>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <p id="msg"></p>
+  </div>
+</section>
+
+<!-- ⚙️ ADMIN DASHBOARD -->
+<section id="admin">
+  <h2>Admin Dashboard</h2>
+  <p>Logged in as: <span id="roleName"></span></p>
+  <button onclick="logout()">Logout</button>
+
+  <h3>Orders</h3>
+  <div id="orderList"></div>
+
+  <h3>Analytics</h3>
+  <p>Total Orders: <span id="totalOrders">0</span></p>
+  <p>Total Customers: <span id="totalCustomers">0</span></p>
+
+  <div id="manageAdmins">
+    <h3>Manage Moderators (Admin only)</h3>
+    <p>Feature Coming Soon...</p>
+  </div>
+</section>
+
+<footer>© 2025 ATOZ Bangladesh — All Rights Reserved</footer>
+
+<script>
+function show(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* CART + CHECKOUT */
+function addToCart(name,price){
+  let cart=JSON.parse(localStorage.getItem("cart"))||[];
+  cart.push({name,price});
+  localStorage.setItem("cart",JSON.stringify(cart));
+  alert("Added to cart!");
+}
+document.getElementById("checkoutForm")?.addEventListener("submit",e=>{
+  e.preventDefault();
+  const order={
+    id:Date.now(),
+    name:name.value,phone:phone.value,
+    district:district.value,area:area.value,address:address.value
+  };
+  let orders=JSON.parse(localStorage.getItem("orders"))||[];
+  orders.push(order);
+  localStorage.setItem("orders",JSON.stringify(orders));
+  alert("Order placed successfully!");
+  show('home');
+});
+
+/* LOGIN */
+function login(){
+  const email=document.getElementById("email").value.trim();
+  const pass=document.getElementById("password").value.trim();
+  const msg=document.getElementById("msg");
+  if(email==="admin@atoz.com"&&pass==="123456"){
+    localStorage.setItem("role","admin");loadAdmin();
+  }else if(email==="mod@atoz.com"&&pass==="1234"){
+    localStorage.setItem("role","moderator");loadAdmin();
+  }else msg.textContent="❌ Wrong email or password!";
+}
+
+/* ADMIN DASHBOARD */
+function loadAdmin(){
+  const role=localStorage.getItem("role");
+  document.getElementById("roleName").textContent=role.toUpperCase();
+  show('admin');
+  if(role==="moderator"){document.getElementById("manageAdmins").style.display="none";}
+  let orders=JSON.parse(localStorage.getItem("orders"))||[];
+  document.getElementById("totalOrders").textContent=orders.length;
+  document.getElementById("totalCustomers").textContent=new Set(orders.map(o=>o.phone)).size;
+  let html="";
+  orders.forEach(o=>{
+    html+=`<div class="order-box"><b>${o.name}</b> (${o.phone})<br>${o.district}, ${o.area}<br><small>ID:${o.id}</small></div>`;
+  });
+  document.getElementById("orderList").innerHTML=html;
+}
+function logout(){
+  localStorage.removeItem("role");
+  show('login');
+}
+</script>
+</body>
+</html>
