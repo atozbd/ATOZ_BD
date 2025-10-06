@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — ATOZ Bangladesh</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 🟧 Header -->
+  <header class="amazon-header">
+    <div class="header-left">
+      <img src="images/logo.png" alt="ATOZ Logo" class="logo-img" />
+      <h1 class="logo"><span>ATOZ</span> Bangladesh</h1>
+    </div>
+    <div class="header-right">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="checkout.html">Checkout</a>
+    </div>
+  </header>
+
+  <!-- 🟦 Navigation -->
+  <nav class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="offers.html">Today’s Deals</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="track.html">Track Order</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html" class="active">About</a>
+  </nav>
+
+  <!-- 🟨 About Section -->
+  <main class="about-container">
+    <h2>About ATOZ Bangladesh</h2>
+    <p>Welcome to <strong>ATOZ Bangladesh</strong> — your one-stop online shop for everything!  
+    From electronics and mobiles to fashion, home essentials, and grocery, we deliver across the nation with love ❤️</p>
+
+    <h3>Our Mission</h3>
+    <p>To make online shopping in Bangladesh faster, safer, and easier for everyone.  
+    We believe in quality products, fast delivery, and 100% customer satisfaction.</p>
+
+    <h3>Our Vision</h3>
+    <p>We aim to become Bangladesh’s most trusted eCommerce brand by offering all categories of products under one platform — from A to Z.</p>
+
+    <h3>Our Services</h3>
+    <ul>
+      <li>🛍️ Online Shopping (Electronics, Fashion, Grocery, etc.)</li>
+      <li>🚚 Fast Delivery inside & outside Dhaka</li>
+      <li>💳 Cash on Delivery & Online Payment</li>
+      <li>📦 Easy Return & Replacement Policy</li>
+      <li>📞 24/7 Customer Support</li>
+    </ul>
+
+    <h3>Meet Our Team</h3>
+    <div class="team-section">
+      <div class="team">
+        <img src="images/admin.jpg" alt="Admin">
+        <p><strong>Md Saidul Islam</strong><br>Founder & CEO</p>
+      </div>
+      <div class="team">
+        <img src="images/support.jpg" alt="Support">
+        <p><strong>Customer Support</strong><br>Service Team</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🩵 Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <a href="#">Privacy</a> |
+      <a href="#">Terms</a> |
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>© <span id="year"></span> ATOZ Bangladesh — All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+.about-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+.about-container h2, h3 {
+  color: #232f3e;
+}
+.about-container p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+.about-container ul {
+  text-align: left;
+  margin: 15px 0 25px 20px;
+}
+.about-container li {
+  margin-bottom: 8px;
+}
+.team-section {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+.team {
+  text-align: center;
+}
+.team img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
