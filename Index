@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATOZ Bangladesh — Online Shopping</title>
+  <meta name="description" content="ATOZ Bangladesh — trusted online shop for electronics, fashion, home & grocery. Fast delivery anywhere in Bangladesh.">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="images/logo.png" />
+</head>
+<body>
+
+  <!-- 🟧 Header -->
+  <header class="amazon-header">
+    <div class="header-left">
+      <img src="images/logo.png" alt="ATOZ Logo" class="logo-img" />
+      <h1 class="logo"><span>ATOZ</span> Bangladesh</h1>
+    </div>
+
+    <div class="header-center">
+      <input type="text" placeholder="Search for products, brands and more...">
+      <button>🔍</button>
+    </div>
+
+    <div class="header-right">
+      <a href="#">Sign In</a>
+      <a href="checkout.html">Cart 🛒</a>
+    </div>
+  </header>
+
+  <!-- 🟦 Navigation Bar -->
+  <nav class="nav-bar">
+    <a href="index.html" class="active">Home</a>
+    <a href="products.html">Products</a>
+    <a href="offers.html">Today’s Deals</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="track.html">Track Order</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- 🟨 Hero Banner -->
+  <section class="hero-banner">
+    <div class="hero-text">
+      <h2>Welcome to <span>ATOZ Bangladesh</span></h2>
+      <p>Shop everything from one place — Electronics, Fashion, Home, and more!</p>
+      <a href="products.html" class="btn">Shop Now</a>
+    </div>
+    <img src="images/hero.jpg" alt="Shopping Banner" class="hero-img">
+  </section>
+
+  <!-- 🟩 Categories -->
+  <main>
+    <section class="categories">
+      <h3>Shop by Category</h3>
+      <div class="cat-grid">
+        <div class="cat"><img src="images/electronics.jpg"><p>Electronics</p></div>
+        <div class="cat"><img src="images/mobile.jpg"><p>Mobiles</p></div>
+        <div class="cat"><img src="images/fashion.jpg"><p>Fashion</p></div>
+        <div class="cat"><img src="images/grocery.jpg"><p>Grocery</p></div>
+        <div class="cat"><img src="images/home.jpg"><p>Home & Kitchen</p></div>
+        <div class="cat"><img src="images/beauty.jpg"><p>Beauty & Health</p></div>
+      </div>
+    </section>
+
+    <!-- 🛒 Featured Products -->
+    <section class="featured">
+      <h3>Top Deals</h3>
+      <div class="product-grid">
+        <div class="product">
+          <img src="images/item1.jpg" alt="Earbuds">
+          <h4>Wireless Earbuds</h4>
+          <p>৳1250</p>
+          <button>Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="images/item2.jpg" alt="Smart Watch">
+          <h4>Smart Watch</h4>
+          <p>৳1750</p>
+          <button>Add to Cart</button>
+        </div>
+        <div class="product">
+          <img src="images/item3.jpg" alt="Shoes">
+          <h4>Casual Sneakers</h4>
+          <p>৳950</p>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 🩵 Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <a href="#">About</a> |
+      <a href="#">Privacy</a> |
+      <a href="#">Terms</a>
+    </div>
+    <p>© <span id="year"></span> ATOZ Bangladesh — All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+.logo-img {
+  height: 45px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-img {
+  width: 40%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+images.zip
+├── logo.png
+├── hero.jpg
+├── electronics.jpg
+├── mobile.jpg
+├── fashion.jpg
+├── grocery.jpg
+├── home.jpg
+├── beauty.jpg
+├── item1.jpg
+├── item2.jpg
+└── item3.jpg
