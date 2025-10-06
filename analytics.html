@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Analytics — ATOZ Bangladesh</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header class="amazon-header">
+    <div class="header-left">
+      <h1 class="logo"><span>ATOZ</span> Bangladesh</h1>
+    </div>
+    <div class="header-right">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="checkout.html">Checkout</a>
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="offers.html">Deals</a>
+    <a href="track.html">Track</a>
+    <a href="analytics.html" class="active">Sales Analytics</a>
+  </nav>
+
+  <main class="analytics-container">
+    <h2>📊 Sales Performance Overview</h2>
+
+    <!-- Time Filter -->
+    <div class="filter-section">
+      <label for="period">Select Period:</label>
+      <select id="period" onchange="updateReport()">
+        <option value="1">Today</option>
+        <option value="3">Last 3 Days</option>
+        <option value="7">Last 7 Days</option>
+        <option value="15">Last 15 Days</option>
+        <option value="30">Last 30 Days</option>
+        <option value="60">Last 60 Days</option>
+        <option value="90">Last 90 Days</option>
+        <option value="180">Last 6 Months</option>
+        <option value="365">Last 1 Year</option>
+      </select>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Total Delivered</h3>
+        <p id="deliveredCount">0</p>
+      </div>
+      <div class="card">
+        <h3>Total Sales (৳)</h3>
+        <p id="totalSales">0</p>
+      </div>
+      <div class="card">
+        <h3>Profit (৳)</h3>
+        <p id="profit">0</p>
+      </div>
+      <div class="card">
+        <h3>Loss (৳)</h3>
+        <p id="loss">0</p>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <section class="charts">
+      <div class="chart-box">
+        <h3>Sales Trend</h3>
+        <canvas id="trendChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> ATOZ Bangladesh — All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Demo Data (তুমি চাইলে গুগল শিট বা ডাটাবেস থেকে রিয়েল ডেটা আনতে পারবে)
+    const salesData = {
+      1:   { delivered: 20, sales: 25000, profit: 5000, loss: 1000 },
+      3:   { delivered: 75, sales: 78000, profit: 15500, loss: 2500 },
+      7:   { delivered: 190, sales: 192000, profit: 40000, loss: 5000 },
+      15:  { delivered: 370, sales: 375000, profit: 82000, loss: 9000 },
+      30:  { delivered: 700, sales: 710000, profit: 160000, loss: 15000 },
+      60:  { delivered: 1380, sales: 1420000, profit: 305000, loss: 24000 },
+      90:  { delivered: 2200, sales: 2280000, profit: 480000, loss: 32000 },
+      180: { delivered: 4300, sales: 4500000, profit: 900000, loss: 70000 },
+      365: { delivered: 8500, sales: 8900000, profit: 1870000, loss: 150000 }
+    };
+
+    const trendCtx = document.getElementById('trendChart');
+    const chart = new Chart(trendCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Today','3d','7d','15d','30d','60d','90d','6m','1y'],
+        datasets: [{
+          label: 'Sales (৳)',
+          data: Object.values(salesData).map(d => d.sales),
+          backgroundColor: '#ff9900'
+        }]
+      },
+      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+
+    function updateReport() {
+      const days = document.getElementById('period').value;
+      const data = salesData[days];
+
+      document.getElementById("deliveredCount").textContent = data.delivered;
+      document.getElementById("totalSales").textContent = data.sales.toLocaleString();
+      document.getElementById("profit").textContent = data.profit.toLocaleString();
+      document.getElementById("loss").textContent = data.loss.toLocaleString();
+    }
+
+    updateReport(); // Default: today
+  </script>
+
+</body>
+</html>
+.filter-section {
+  margin: 20px 0;
+  text-align: center;
+}
+.filter-section select {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.charts {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.chart-box {
+  width: 80%;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
