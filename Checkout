@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — ATOZ Bangladesh</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 🟧 Header -->
+  <header class="amazon-header">
+    <div class="header-left">
+      <img src="images/logo.png" alt="ATOZ Logo" class="logo-img" />
+      <h1 class="logo"><span>ATOZ</span> Bangladesh</h1>
+    </div>
+    <div class="header-right">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+    </div>
+  </header>
+
+  <!-- 🟨 Checkout Section -->
+  <main class="checkout-container">
+    <h2>Confirm Your Order</h2>
+
+    <form class="checkout-form">
+      <label>Customer Name:</label>
+      <input type="text" placeholder="Enter your name" required>
+
+      <label>Phone Number:</label>
+      <input type="tel" placeholder="01XXXXXXXXX" required>
+
+      <label>District:</label>
+      <select id="district" required>
+        <option value="">Select District</option>
+        <option value="Dhaka">Dhaka</option>
+        <option value="Chittagong">Chittagong</option>
+        <option value="Rajshahi">Rajshahi</option>
+        <option value="Khulna">Khulna</option>
+        <option value="Sylhet">Sylhet</option>
+        <option value="Barisal">Barisal</option>
+        <option value="Rangpur">Rangpur</option>
+        <option value="Mymensingh">Mymensingh</option>
+      </select>
+
+      <label>Upazila:</label>
+      <input type="text" placeholder="Enter Upazila name" required>
+
+      <label>Area / Address:</label>
+      <input type="text" placeholder="Enter area or street name" required>
+
+      <label>Delivery Charge:</label>
+      <input type="text" id="charge" value="৳70 (Inside Dhaka)" readonly>
+
+      <button type="submit">✅ Confirm Order</button>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> ATOZ Bangladesh — All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const districtSelect = document.getElementById("district");
+    const chargeInput = document.getElementById("charge");
+
+    districtSelect.addEventListener("change", () => {
+      if (districtSelect.value === "Dhaka") {
+        chargeInput.value = "৳70 (Inside Dhaka)";
+      } else {
+        chargeInput.value = "৳120 (Outside Dhaka)";
+      }
+    });
+  </script>
+</body>
+</html>
+.checkout-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkout-form input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.checkout-form button {
+  background: #ff9900;
+  border: none;
+  padding: 12px;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.checkout-form button:hover {
+  background: #ffa41c;
+}
