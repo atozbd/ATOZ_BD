@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Order — ATOZ Bangladesh</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 🟧 Header -->
+  <header class="amazon-header">
+    <div class="header-left">
+      <img src="images/logo.png" alt="ATOZ Logo" class="logo-img" />
+      <h1 class="logo"><span>ATOZ</span> Bangladesh</h1>
+    </div>
+    <div class="header-right">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="checkout.html">Checkout</a>
+    </div>
+  </header>
+
+  <!-- 🟦 Navigation -->
+  <nav class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="offers.html">Today’s Deals</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="track.html" class="active">Track Order</a>
+  </nav>
+
+  <!-- 🟨 Tracking Section -->
+  <main class="track-container">
+    <h2>Track Your Order</h2>
+    <p>Enter your phone number or Invoice ID to check order status 👇</p>
+
+    <input type="text" id="trackInput" placeholder="Enter Phone or Invoice ID">
+    <button onclick="trackOrder()">Track Now</button>
+
+    <div id="result" class="track-result"></div>
+  </main>
+
+  <!-- 🩵 Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <a href="about.html">About</a> |
+      <a href="#">Privacy</a> |
+      <a href="#">Terms</a>
+    </div>
+    <p>© <span id="year"></span> ATOZ Bangladesh — All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Demo tracking data (তুমি পরে চাইলে ডাটাবেজ বা গুগল শিট যুক্ত করতে পারো)
+    const orders = [
+      { id: "ATOZ-101", name: "Rakib Hasan", courier: "Steadfast", status: "Delivered ✅" },
+      { id: "ATOZ-102", name: "Rafi Uddin", courier: "Pathao", status: "On The Way 🚚" },
+      { id: "ATOZ-103", name: "Jamil", courier: "SA Paribahan", status: "Processing ⏳" }
+    ];
+
+    function trackOrder() {
+      const input = document.getElementById("trackInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      const found = orders.find(order =>
+        order.id.toLowerCase() === input.toLowerCase() ||
+        order.name.toLowerCase().includes(input.toLowerCase())
+      );
+
+      if (found) {
+        resultDiv.innerHTML = `
+          <div class="order-box">
+            <p><strong>Order ID:</strong> ${found.id}</p>
+            <p><strong>Customer:</strong> ${found.name}</p>
+            <p><strong>Courier:</strong> ${found.courier}</p>
+            <p><strong>Status:</strong> ${found.status}</p>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p class="not-found">❌ No order found. Please check your ID.</p>`;
+      }
+    }
+  </script>
+
+</body>
+</html>
+.track-container {
+  text-align: center;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+.track-container input {
+  padding: 10px;
+  width: 80%;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.track-container button {
+  margin-top: 10px;
+  background: #ff9900;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.track-container button:hover {
+  background: #ffa41c;
+}
+.order-box {
+  text-align: left;
+  margin-top: 20px;
+  background: #f6f6f6;
+  padding: 15px;
+  border-radius: 8px;
+}
+.not-found {
+  color: red;
+  margin-top: 15px;
+}
