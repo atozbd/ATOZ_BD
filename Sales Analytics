@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Analytics — ATOZ Bangladesh</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- 🟧 Header -->
+  <header class="amazon-header">
+    <div class="header-left">
+      <h1 class="logo"><span>ATOZ</span> Bangladesh</h1>
+    </div>
+  </header>
+
+  <!-- 🟦 Navigation -->
+  <nav class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="analytics.html" class="active">Sales Analytics</a>
+  </nav>
+
+  <!-- 📊 Main Dashboard -->
+  <main class="analytics-container">
+    <h2>📊 Sales Dashboard</h2>
+    <p>Real-time overview of ATOZ Bangladesh performance</p>
+
+    <!-- 🔽 Filter -->
+    <div class="filter-section">
+      <label for="period">Select Period:</label>
+      <select id="period" onchange="updateReport()">
+        <option value="1">Today</option>
+        <option value="3">Last 3 Days</option>
+        <option value="7">Last 7 Days</option>
+        <option value="15">Last 15 Days</option>
+        <option value="30">Last 30 Days</option>
+        <option value="60">Last 60 Days</option>
+        <option value="90">Last 90 Days</option>
+        <option value="180">Last 6 Months</option>
+        <option value="365">Last 1 Year</option>
+      </select>
+      <button id="downloadBtn" onclick="downloadCSV()">⬇️ Download CSV</button>
+    </div>
+
+    <!-- 🧾 Summary -->
+    <div class="summary-cards">
+      <div class="card"><h3>Total Delivered</h3><p id="deliveredCount">0</p></div>
+      <div class="card"><h3>Total Sales (৳)</h3><p id="totalSales">0</p></div>
+      <div class="card"><h3>Profit (৳)</h3><p id="profit">0</p></div>
+      <div class="card"><h3>Loss (৳)</h3><p id="loss">0</p></div>
+    </div>
+
+    <!-- 📈 Charts -->
+    <section class="charts">
+      <div class="chart-box">
+        <h3>Sales Trend</h3>
+        <canvas id="trendChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Top Categories</h3>
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <!-- 🩵 Footer -->
+  <footer class="footer">
+    <p>© <span id="year"></span> ATOZ Bangladesh — All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let sales = [];
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => {
+        sales = data.daily_sales;
+        updateReport();
+        drawCharts();
+      });
+
+    function updateReport() {
+      const days = parseInt(document.getElementById("period").value);
+      const recent = sales.slice(-days);
+      const tSales = recent.reduce((a,b)=>a+b.sales,0);
+      const tProfit = recent.reduce((a,b)=>a+b.profit,0);
+      const tLoss = recent.reduce((a,b)=>a+b.loss,0);
+      const tDelivered = recent.reduce((a,b)=>a+b.delivered,0);
+
+      document.getElementById("totalSales").textContent = tSales.toLocaleString();
+      document.getElementById("profit").textContent = tProfit.toLocaleString();
+      document.getElementById("loss").textContent = tLoss.toLocaleString();
+      document.getElementById("deliveredCount").textContent = tDelivered;
+    }
+
+    function drawCharts() {
+      // 📊 Line chart
+      const ctx1 = document.getElementById('trendChart');
+      new Chart(ctx1, {
+        type:'line',
+        data:{
+          labels:sales.map(d=>d.date),
+          datasets:[{
+            label:'Sales (৳)',
+            data:sales.map(d=>d.sales),
+            borderColor:'#ff9900',
+            backgroundColor:'rgba(255,153,0,0.2)',
+            fill:true,
+            tension:0.3
+          }]
+        },
+        options:{responsive:true,scales:{y:{beginAtZero:true}}}
+      });
+
+      // 🛍️ Doughnut chart
+      const ctx2 = document.getElementById('categoryChart');
+      new Chart(ctx2,{
+        type:'doughnut',
+        data:{
+          labels:['Electronics','Fashion','Grocery','Home','Beauty'],
+          datasets:[{
+            data:[35,25,15,10,15],
+            backgroundColor:['#ff9900','#37475a','#232f3e','#ffa41c','#999']
+          }]
+        }
+      });
+    }
+
+    function downloadCSV() {
+      const rows=[["Date","Sales","Profit","Loss","Delivered"]];
+      sales.forEach(d=>rows.push([d.date,d.sales,d.profit,d.loss,d.delivered]));
+      const csv="data:text/csv;charset=utf-8,"+rows.map(r=>r.join(",")).join("\n");
+      const link=document.createElement("a");
+      link.href=encodeURI(csv);
+      link.download="ATOZ_Sales_Report.csv";
+      document.body.appendChild(link);
+      link.click();
+    }
+  </script>
+
+</body>
+</html>
